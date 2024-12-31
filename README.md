@@ -1,59 +1,84 @@
-<img alt="iptv-checker" src="https://github.com/zhimin-dev/iptv-checker-web/blob/main/src/assets/icon.png" height=80>
+<img alt="iptv-checker" src="https://github.com/zhimin-dev/iptv-checker/blob/main/icon.png" height=80>
 
-# iptv-checker
+[中文版本](https://github.com/zhimin-dev/iptv-checker/blob/main/cn.md)
 
-本项目拆成2个项目，分别为前端[iptv-checker-web](https://github.com/zhimin-dev/iptv-checker-web)项目以及后端[iptv-checker-rs](https://github.com/zhimin-dev/iptv-checker-rs)项目
+## iptv-checker
 
-## iptv-checker-web
+IPTV checker tool for Docker && Desktop && CMD, check your playlist is available
 
-提供iptv-checker后台页面
+- For container versions, go to the [docker hub](https://hub.docker.com/r/zmisgod/iptvchecker) page to find the relevant commands
 
-## iptv-checker-rs
+- In command-line mode, go to [GitHub's release page](https://github.com/zhimin-dev/iptv-checker/releases) and look for the download file with a version number that starts with `v`(default version)
 
-提供iptv的cmd命令以及web api
+- For the desktop version, please go to [GitHub's release page](https://github.com/zhimin-dev/iptv-checker/releases) and look for the download file with a version number that starts with `d`(means desktop)
 
-### docker本地打包
-
-先将下面3个项目clone到本地(比如放在node文件夹下)，下面为文件夹目录示例
-
-- node
-  - iptv-checker
-  - iptv-checker-web
-  - iptv-checker-rs
-
-```bash
-cd node # 进入node文件夹
-docker build -f iptv-checker/dockerfile -t ipserver . # 执行build
-docker run -d -p 8081:8089 --name myIp ipserver # 运行
-```
-
-### Docker官方包使用方法
+### Docker Official Package Usage
 
 [DockerHub](https://hub.docker.com/r/zmisgod/iptvchecker)
 
-按照下面的命令运行docker版本的iptv-checker
+Run the docker version of iptv-checker with the following commands
 
 ```bash
 docker pull zmisgod/iptvchecker
+
 docker run -d -p 8081:8089 --name myIp zmisgod/iptvchecker
+
+# Alternatively, specify the port (this time specifying the port as 10001, you need to change the two 10001 places below), output file mapping to local directory
+docker run -d -p 8081:10001 -e WEB_PORT=10001 -v ~/icStatic/output:/app/static/output  --name myIp ipserver
 ```
 
-再打开浏览器访问`http://127.0.0.1:8081/`即可
+Then open your browser and visit `http://127.0.0.1:8081/`.
 
-### Docker本地打多平台包方法
-
-```bash
-docker buildx create --name mybuilder
-docker buildx inspect --bootstrap
-docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t zmisgod/iptvchecker:latest --push .
-```
-
-### Docker-Compose 部署
+### Docker-Compose Deployment
 
 ```bash
 docker-compose up -d
 ```
 
-## 联系
+### frequently asked questions
 
-[知敏博客](https://zmis.me/user/zmisgod)
+- If the file is corrupted after the macos is installed, type `xattr -cr /Applications/iptv-checker-desktop.app` to solve the problem
+
+## Changelog
+
+- v4.1.0
+  - [fix bug 77](https://github.com/zhimin-dev/iptv-checker/issues/77)
+  - [feature: custom sort](https://github.com/zhimin-dev/iptv-checker/issues/69)
+  - [feature: support txt file](https://github.com/zhimin-dev/iptv-checker/issues/74)
+  - fix dark mode ui error
+  - add fast checker page
+- v4.0.4
+  - upgrade tauri 1.0 to 2.0
+  - The online playback supports full screen and shows the correct position
+- v4.0.3
+  - fixed the issue that it could not be played on the Windows platform
+- v4.0.1
+  - Bug Fixes
+    - Issue with the source input box not recognizing data
+    - Desktop version details page unable to drag issue
+    - Optimized online viewing experience on the desktop version details page
+    - Entering details page through public subscription source menu after checking data would show the last state of the check settings menu
+    - Fixed issue with source detection not being able to pause and check failure
+  - Background tasks support export and import
+  - Background tasks added option to not check tasks
+- v4.0.0
+  - UI Update
+  - Support for Windows, macOS, and Linux desktop clients
+- v3.2.1
+  - Background tasks support concurrency and sorting settings
+  - Optimized task list download interface
+  - Fixed issue with smart box parsing data incorrectly
+- v3.2.0
+  - Support for keyword matching
+  - Support for timeout configuration
+- v3.1.1
+  - Fixed issue with increased CPU usage after background checks
+- v3.1.0
+  - Support for task editing
+  - Support for immediate task execution
+- v3.0.0
+  - Support for background checking
+
+## Contact
+
+[My blog](https://zmis.me/user/zmisgod)
